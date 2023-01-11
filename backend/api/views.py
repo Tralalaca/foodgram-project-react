@@ -1,14 +1,7 @@
-import io
-from os import path
-
-from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.db.models.aggregates import Sum
 from django.db.models.expressions import Exists, OuterRef, Value
-from django.http import FileResponse
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfgen import canvas
+from django.http import HttpResponse
 from rest_framework import generics, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import (SAFE_METHODS, IsAuthenticated,
@@ -100,10 +93,11 @@ class RecipesViewSet(viewsets.ModelViewSet):
             f' - {card_item["amount"]}'
             for card_item in shopping_card
         ])
-
+        filename = 'shopping_list.txt'
         response = HttpResponse(shopping_list, content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename=shopping_list.txt'
+        response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
+
 
 class TagsViewSet(PermissionsMixin,
                   viewsets.ModelViewSet):
