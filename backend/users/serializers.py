@@ -1,9 +1,8 @@
 import django.contrib.auth.password_validation as validators
+from api.models import Recipe, Subscribe
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-
-from api.models import Recipe, Subscribe
 
 User = get_user_model()
 MSG = 'Не удается войти в систему с предоставленными учетными данными.'
