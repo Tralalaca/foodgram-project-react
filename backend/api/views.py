@@ -1,5 +1,7 @@
 import io
+from os import path
 
+from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.db.models.aggregates import Sum
 from django.db.models.expressions import Exists, OuterRef, Value
@@ -85,44 +87,23 @@ class RecipesViewSet(viewsets.ModelViewSet):
     @action(detail=False,
             permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
-        shoping_exists = (
+        shopping_card = (
             request.user.shopping_cart.recipe.values(
                 'ingredients__name',
                 'ingredients__measurement_unit'
             ).annotate(amount=Sum('recipe__amount')).order_by())
 
-        buffer = io.BytesIO()
-        list = canvas.Canvas(buffer)
-        pdfmetrics.registerFont(TTFont('Arial', 'style/arial.ttf'))
-        list.setFont('Arial', 24)
-        x, y = 50, 800
-        if shoping_exists:
-            list.drawString(x + 150, y, 'Список покупок:')
-            list.setFont('Arial', 16)
-            for index, recipe in enumerate(shoping_exists, start=1):
-                list.drawString(
-                    x, y - 20,
-                    f'{index}. {recipe["ingredients__name"]} - '
-                    f'{recipe["amount"]} '
-                    f'{recipe["ingredients__measurement_unit"]}.')
-                y -= 15
-                if y <= 50:
-                    list.showPage()
-                    y = 800
-            list.save()
-            buffer.seek(0)
-            return FileResponse(buffer, as_attachment=True,
-                                filename='shoping.pdf')
-        list.setFont('Arial', 24)
-        list.drawString(
-            x, y,
-            'Список пуст.'
-        )
-        list.save()
-        buffer.seek(0)
-        return FileResponse(buffer, as_attachment=True,
-                            filename='shoping.pdf')
+        shopping_list = ''
+        shopping_list += '\n'.join([
+            f'- {card_item["ingredients__name"]} '
+            f'({card_item["ingredients__measurement_unit"]})'
+            f' - {card_item["amount"]}'
+            for card_item in shopping_card
+        ])
 
+        response = HttpResponse(shopping_list, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename=shopping_list.txt'
+        return response
 
 class TagsViewSet(PermissionsMixin,
                   viewsets.ModelViewSet):
