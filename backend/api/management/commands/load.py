@@ -1,8 +1,7 @@
 import csv
 
-from django.core.management import BaseCommand
-
 from django.conf import settings
+from django.core.management import BaseCommand
 
 from api.models import Ingredient, Tag
 
@@ -10,6 +9,7 @@ MODELS_FILES = {
     Ingredient: 'ingredients.csv',
     Tag: 'tag.csv'
 }
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
