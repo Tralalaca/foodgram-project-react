@@ -5,7 +5,6 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
 User = get_user_model()
-MSG = 'Не удается войти в систему с предоставленными учетными данными.'
 
 
 class TokenSerializer(serializers.Serializer):
@@ -23,7 +22,7 @@ class TokenSerializer(serializers.Serializer):
             user = authenticate(request=self.context.get('request'),
                                 email=email, password=password)
             if not user:
-                raise serializers.ValidationError(MSG, code='authorization')
+                raise serializers.ValidationError(code='authorization')
         else:
             msg = 'Необходимо указать "адрес электронной почты" и "пароль".'
             raise serializers.ValidationError(
@@ -98,7 +97,7 @@ class PasswordSerializer(serializers.Serializer):
     def validate_current_password(self, current_password):
         user = self.context['request'].user
         if not authenticate(username=user.email, password=current_password):
-            raise serializers.ValidationError(MSG, code='authorization')
+            raise serializers.ValidationError(code='authorization')
         return current_password
 
     def validate_new_password(self, new_password):
