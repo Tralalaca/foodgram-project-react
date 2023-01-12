@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
-class RecipeIngredientInline(admin.StackedInline):
+class RecipeIngredientInline(admin.TabularInline):
     model = Recipe.ingredients
     min_num = 1
 
