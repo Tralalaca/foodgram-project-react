@@ -7,6 +7,7 @@ class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
     fields = ('ingredient', 'amount')
     min_num = 1
+    extra = 0
 
 
 @admin.register(Recipe)
