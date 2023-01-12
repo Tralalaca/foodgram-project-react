@@ -13,9 +13,18 @@ class RecipeIngredientInline(admin.StackedInline):
 class AdminRecipe(admin.ModelAdmin):
 
     list_display = ('author', 'name', 'image', 'text', 'cooking_time',
-                    'cooking_time', 'pub_date')
+                    'cooking_time', 'pub_date', 'get_ingredients')
 
     inlines = (RecipeIngredientInline,)
+
+    @admin.display(description='Ингредиенты')
+    def get_ingredients(self, obj):
+        return '\n '.join([
+            f'{item["ingredient__name"]} - {item["amount"]}'
+            f' {item["ingredient__measurement_unit"]}.'
+            for item in obj.recipe.values(
+                'ingredient__name',
+                'amount', 'ingredient__measurement_unit')])
 
 
 @admin.register(Tag)
