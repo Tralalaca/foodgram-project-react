@@ -1,9 +1,8 @@
 import csv
 
+from api.models import Ingredient, Tag
 from django.conf import settings
 from django.core.management import BaseCommand
-
-from api.models import Ingredient, Tag
 
 MODELS_FILES = {
     Ingredient: 'ingredients.csv',

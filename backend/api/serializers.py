@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from drf_base64.fields import Base64ImageField
 from rest_framework import serializers
-
 from users.serializers import SubscribedMixin
 
 from .models import Ingredient, Recipe, RecipeIngredient, Tag

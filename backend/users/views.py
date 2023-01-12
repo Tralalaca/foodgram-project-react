@@ -1,3 +1,4 @@
+from api.models import Subscribe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.db.models import Count, Exists, OuterRef
@@ -10,8 +11,6 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action, api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-
-from api.models import Subscribe
 
 from .serializers import (PasswordSerializer, SubscribeSerializer,
                           TokenSerializer, UserCreateSerializer,
