@@ -31,7 +31,7 @@ class TokenSerializer(serializers.Serializer):
         return attrs
 
 
-class GetIsSubscribedMixin:
+class SubscribedMixin:
 
     def get_is_subscribed(self, obj):
         user = self.context['request'].user
@@ -40,7 +40,7 @@ class GetIsSubscribedMixin:
         return user.follower.filter(author=obj).exists()
 
 
-class UserListSerializer(GetIsSubscribedMixin,
+class UserListSerializer(SubscribedMixin,
                          serializers.ModelSerializer):
     is_subscribed = serializers.BooleanField(read_only=True)
 

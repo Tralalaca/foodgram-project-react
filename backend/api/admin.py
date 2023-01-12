@@ -4,39 +4,29 @@ from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
 class RecipeIngredientInline(admin.StackedInline):
-    model = RecipeIngredient
-    autocomplete_fields = ('ingredient',)
+    model = Recipe.ingredients.through
     min_num = 1
 
 
 @admin.register(Recipe)
-class AdminRecipe(admin.ModelAdmin):
+class RecipeAdmin(admin.ModelAdmin):
 
-    list_display = ('author', 'image', 'text', 'cooking_time',
-                    'cooking_time', 'pub_date', 'get_ingredients')
+    list_display = ('author', 'name', 'image', 'text', 'cooking_time',
+                    'cooking_time', 'pub_date')
 
     inlines = (RecipeIngredientInline,)
 
-    @admin.display(description='Ингредиенты')
-    def get_ingredients(self, obj):
-        return '\n '.join([
-            f'{item["ingredient__name"]} - {item["amount"]}'
-            f' {item["ingredient__measurement_unit"]}.'
-            for item in obj.recipe.values(
-                'ingredient__name',
-                'amount', 'ingredient__measurement_unit')])
-
 
 @admin.register(Tag)
-class AdminTag(admin.ModelAdmin):
+class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'color', 'slug')
 
 
 @admin.register(Ingredient)
-class AdminIngredient(admin.ModelAdmin):
+class IngredientAdmin(admin.ModelAdmin):
     list_display = ('name', 'measurement_unit')
 
 
 @admin.register(RecipeIngredient)
-class AdminRecipeIngredient(admin.ModelAdmin):
+class RecipeIngredientAdmin(admin.ModelAdmin):
     list_display = ('recipe', 'ingredient', 'amount')
