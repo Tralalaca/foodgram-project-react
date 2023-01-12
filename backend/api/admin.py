@@ -12,7 +12,7 @@ class RecipeIngredientInline(admin.StackedInline):
 @admin.register(Recipe)
 class AdminRecipe(admin.ModelAdmin):
 
-    list_display = ('author', 'name', 'image', 'text', 'cooking_time',
+    list_display = ('author', 'image', 'text', 'cooking_time',
                     'cooking_time', 'pub_date', 'get_ingredients')
 
     inlines = (RecipeIngredientInline,)
