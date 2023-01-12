@@ -4,6 +4,7 @@ from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
 class RecipeIngredientInline(admin.StackedInline):
+    model = RecipeIngredient
     min_num = 1
 
 
