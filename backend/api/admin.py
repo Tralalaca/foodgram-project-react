@@ -3,8 +3,14 @@ from django.contrib import admin
 from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
+class RecipeIngredientInline(admin.StackedInline):
+    min_num = 1
+
 @admin.register(Recipe)
-class AdminRecupes(admin.ModelAdmin):
+class AdminRecipe(admin.ModelAdmin):
+
+    inlines = (RecipeIngredientInline,)
+
     list_display = ('author', 'name', 'image', 'text', 'cooking_time',
                     'cooking_time', 'pub_date')
 

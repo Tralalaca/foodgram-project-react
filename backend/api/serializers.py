@@ -70,14 +70,10 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         ingredients = data['ingredients']
-        ingredient_list = []
-        for items in ingredients:
-            ingredient = get_object_or_404(
-                Ingredient, id=items['id'])
-            if ingredient in ingredient_list:
-                raise serializers.ValidationError(
-                    'Ингредиент должен быть уникальным!')
-            ingredient_list.append(ingredient)
+        if len(ingredients) > len(set(ingredients)):
+            raise serializers.ValidationError(
+                'Ингредиенты должны быть уникальными'
+            )
         tags = data['tags']
         if not tags:
             raise serializers.ValidationError(
@@ -105,10 +101,10 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         return ingredients
 
     def create_ingredients(self, ingredients, recipe):
-        for ingredient in ingredients:
-            RecipeIngredient.objects.create(recipe=recipe,
-                                            ingredient_id=ingredient.get('id'),
-                                            amount=ingredient.get('amount'), )
+        RecipeIngredient.objects.bulk_create(RecipeIngredient(
+            recipe=recipe,
+            ingredient_id=ingredient.get('id'),
+            amount=ingredient.get('amount')) for ingredient in ingredients)
 
     def create(self, validated_data):
         ingredients = validated_data.pop('ingredients')

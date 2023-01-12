@@ -6,6 +6,9 @@ from django.dispatch import receiver
 
 User = get_user_model()
 
+class Meta:
+    ordering = ['name']
+
 
 class Ingredient(models.Model):
     name = models.CharField('Название ингредиента', max_length=150)
