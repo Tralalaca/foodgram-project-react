@@ -10,10 +10,10 @@ class RecipeIngredientInline(admin.StackedInline):
 @admin.register(Recipe)
 class AdminRecipe(admin.ModelAdmin):
 
-    inlines = (RecipeIngredientInline,)
-
     list_display = ('author', 'name', 'image', 'text', 'cooking_time',
                     'cooking_time', 'pub_date')
+
+    inlines = (RecipeIngredientInline,)
 
 
 @admin.register(Tag)
