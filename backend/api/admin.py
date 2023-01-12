@@ -6,6 +6,7 @@ from .models import Ingredient, Recipe, RecipeIngredient, Tag
 class RecipeIngredientInline(admin.StackedInline):
     min_num = 1
 
+
 @admin.register(Recipe)
 class AdminRecipe(admin.ModelAdmin):
 

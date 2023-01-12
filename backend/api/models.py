@@ -6,6 +6,7 @@ from django.dispatch import receiver
 
 User = get_user_model()
 
+
 class Meta:
     ordering = ['name']
 
