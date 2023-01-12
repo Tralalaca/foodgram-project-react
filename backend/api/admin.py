@@ -3,11 +3,10 @@ from django.contrib import admin
 from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
-class RecipeIngredientInline(admin.TabularInline):
-    model = RecipeIngredient.ingredient.through
-    fields = ('ingredient', 'amount')
+class RecipeIngredientInline(admin.StackedInline):
+    model = RecipeIngredient
+    autocomplete_fields = ('ingredient',)
     min_num = 1
-    extra = 0
 
 
 @admin.register(Recipe)
