@@ -57,6 +57,7 @@ jobs:
           script: |
             sudo docker pull tralalaca/backend
             sudo docker pull tralalaca/frontend
+            cd /infra/
             sudo docker-compose stop
             sudo docker-compose rm backend
             touch .env
