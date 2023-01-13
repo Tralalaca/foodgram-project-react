@@ -29,3 +29,9 @@ docker-compose exec backend python manage.py createsuperuser
 docker-compose exec backend python manage.py collectstatic --no-input 
 docker-compose exec backend python manage.py load
 ```
+
+Сервер для подключения
+
+```
+ http://158.160.3.131/recipes
+```
