@@ -5,7 +5,7 @@ Foodgram - помощник по поиску вкусного обеда, за�
 ### Технологии
 Django, React, Django Reset Framework, NGINX, Gunicorn, PostgreSQL
 
-### Запуск проекта
+### Запуск проекта через докер
 
 Кронирование репозитория
 
@@ -17,7 +17,6 @@ git clone git@github.com:Tralalaca/foodgram-project-react.git
 
 ```
 cd infra
-
 docker-compose up
 ```
 
@@ -29,6 +28,38 @@ docker-compose exec backend python manage.py createsuperuser
 docker-compose exec backend python manage.py collectstatic --no-input 
 docker-compose exec backend python manage.py load
 ```
+
+### Запуск проекта на сервере 
+
+Кронирование репозитория
+
+```
+git clone git@github.com:Tralalaca/foodgram-project-react.git
+```
+
+Передаём файл из /infra  default.conf, docker-compose.yml
+
+```
+scp foodgram-project-react/infra/  default.conf {имя сервера}@{хост}:/home/{имя сервера}
+scp foodgram-project-react/infra/  docker-compose.yml {имя сервера}@{хост}:/home/{имя сервера}
+```
+Создаём файл .env
+
+```
+touch .env 
+nano .env
+```
+Заполнеть файл .env свои данными
+
+```
+DB_ENGINE='django.db.backends.postgresql'
+DB_NAME=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+DB_HOST=db
+DB_PORT='5432'
+```
+
 
 Сервер для подключения
 

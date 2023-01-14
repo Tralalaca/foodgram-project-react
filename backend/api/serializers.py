@@ -63,6 +63,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
     ingredients = IngredientsEditSerializer(
         many=True)
 
+
     class Meta:
         model = Recipe
         fields = '__all__'
@@ -78,6 +79,10 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(
                     'Ингредиент должен быть уникальным!')
             ingredient_list.append(ingredient)
+            if int(items['amount']) >= 1501:
+                raise serializers.ValidationError(
+                    'Мах. количество ингредиента 1500'
+                )
         tags = data['tags']
         if not tags:
             raise serializers.ValidationError(
