@@ -63,7 +63,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
     ingredients = IngredientsEditSerializer(
         many=True)
 
-
     class Meta:
         model = Recipe
         fields = '__all__'
